@@ -60,7 +60,7 @@ public class sample : MonoBehaviour
     public string name;
     public int age;
 
-    public bool get_ans = false;
+    public bool get_ans = false, answer = false;
     public int code;
     public GameObject faculty;
     public GameObject central_obj;
@@ -309,7 +309,7 @@ public class sample : MonoBehaviour
     /// then it start asking to join from ascending order.
     /// </summary>
     /// <param name="type"></param>
-    void Get_list(int type)
+    int Get_list(int type)
     {
         central cen_script = central_obj.GetComponent<central>();
         SortedList<int, GameObject> list = cen_script.classes;
@@ -317,8 +317,18 @@ public class sample : MonoBehaviour
         Debug.Log(list.Count);
         foreach (var pair in list)
         {
-            Debug.Log(list.Keys);
+            Debug.Log(pair.Key);
+            Ask(pair.Value);
+            while (get_ans == false)
+            {
+                
+            }
+            if(answer == true)
+            {
+                return 1;
+            }
         }
+        return -1;  //Nothing on list is goable
     }
 
     /// <summary>
@@ -342,10 +352,12 @@ public class sample : MonoBehaviour
         if(answer==true)
         {
             Vector3 dest = faculty.transform.position;
+            get_ans = true;
             Okthen(dest);
         }
         else
         {
+            get_ans = true;
             //do something else
         }
     }

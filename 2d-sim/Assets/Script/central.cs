@@ -16,9 +16,9 @@ using System.Collections.Generic;
 //TO DO: TEST BY HAVING 2 class and test by giving timer let student choose class.
 public class central : MonoBehaviour {
     public SortedList<int, GameObject> classes = new SortedList<int, GameObject>();
-    public SortedList<GameObject, int> labs = new SortedList<GameObject, int>();
-    public SortedList<GameObject, int> teachs = new SortedList<GameObject, int>();
-    public SortedList<GameObject, int> facils = new SortedList<GameObject, int>();
+    public SortedList<int, GameObject> labs = new SortedList<int, GameObject>();
+    public SortedList<int, GameObject> teachs = new SortedList<int, GameObject>();
+    public SortedList<int, GameObject> facils = new SortedList<int, GameObject>();
     public GameObject[] class_list, lab_list, facil_list, teach_list;
     public int years;
 	// Use this for initialization
@@ -97,10 +97,10 @@ public class central : MonoBehaviour {
         if(type == 0)
             classes.Add(prior,facult);
         else if (type == 1)
-            labs.Add(facult, prior);
+            labs.Add(prior, facult);
         else if (type == 2)
-            teachs.Add(facult, prior);
+            teachs.Add(prior, facult);
         else if (type == 3)
-            facils.Add(facult, prior);
+            facils.Add(prior, facult);
     }
 }
