@@ -2,6 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
+/*
+ * 
+ * button 1: closing button for the "click on object" UI
+ * 
+ */
 public class button1 : MonoBehaviour {
     public GameObject line1;
     public GameObject book;
@@ -13,12 +19,10 @@ public class button1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
     void OnMouseDown()
     {
-        Debug.Log("Click");
         Text text1 = line1.GetComponent<Text>();
         //Time.timeScale = 0;
         text1.text = " "    ;

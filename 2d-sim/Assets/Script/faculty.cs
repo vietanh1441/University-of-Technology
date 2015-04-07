@@ -45,7 +45,7 @@ public class faculty : MonoBehaviour {
         book = GameObject.FindGameObjectWithTag("book");
         central = GameObject.FindGameObjectWithTag("Central");
         central.SendMessage("Add_list", gameObject);
-        Add_class(1);
+        //Add_class(1);
 	}
 	
 	// Update is called once per frame

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /*
  * 
@@ -20,20 +21,115 @@ public class central : MonoBehaviour {
     public SortedList<int, GameObject> teachs = new SortedList<int, GameObject>();
     public SortedList<int, GameObject> facils = new SortedList<int, GameObject>();
     public GameObject[] class_list, lab_list, facil_list, teach_list;
+    public List<GameObject> new_stud_list = new List<GameObject>();
     public int years;
+    public GameObject line1;
+    public GameObject book, button2,button3, button4, button5;
+    public int i = 0; //counter
 	// Use this for initialization
 	void Start () {
-	
+        line1 = GameObject.FindGameObjectWithTag("line1");
+        button2 = GameObject.FindGameObjectWithTag("button2");
+        button3 = GameObject.FindGameObjectWithTag("button3");
+        button4 = GameObject.FindGameObjectWithTag("button4");
+        button5 = GameObject.FindGameObjectWithTag("button5");
+        book = GameObject.FindGameObjectWithTag("book");
+       
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void ItsTime()
+    {
+        //Stop time
+        Time.timeScale = 0;
+        //First telling player they need to choose new student
 
+        //Starting displaying
+        Display(new_stud_list[0]);
+    }
+
+    void Display(GameObject stud)
+    {
+        sample stud_script = stud.GetComponent<sample>();
+        Text text1 = line1.GetComponent<Text>();
+        //Time.timeScale = 0;
+        text1.text = "Name" + stud_script.name;
+        book.transform.localPosition = new Vector3(1, 0, 10);
+        button3.transform.localPosition = new Vector3(6.25f, 3, 9);
+        button2.transform.localPosition = new Vector3(6.25f, .5f, 9);
+        button5.transform.localPosition = new Vector3(3.25f, 0, 9);
+        
+    }
+	
+    /// <summary>
+    /// When next button is push, check if there is next in list, if it does, display the next new student.
+    /// Otherwise, do nothing.
+    /// </summary>
+    /// <param name="i"></param>
+    void Next()
+    {
+        i++;
+        Debug.Log(new_stud_list.Count);
+        if (i < new_stud_list.Count)
+        {
+            button4.transform.localPosition = new Vector3(0f, .5f, 9);
+            Debug.Log(i + "lol" +  new_stud_list.Count);
+            if (i == new_stud_list.Count-1)
+            {
+                button2.transform.position = new Vector3(0, 0, 110);
+                Debug.Log("WHYNOT?");
+                
+            }
+            Display(new_stud_list[i]);
+        }
+        else
+            button2.transform.localPosition = new Vector3(0, 0, 110);
+
+    }
+
+    void Back()
+    {
+        if (i != 0)
+        {
+            i--;
+            Display(new_stud_list[i]);
+        }
+        else
+            button4.transform.localPosition = new Vector3(0, 0, 110);
+    }
+
+    void Choose()
+    {
+        new_stud_list[i].SendMessage("RealStart");
+    }
+
+    /// <summary>
+    /// Function handle closing all the UI for the new student
+    /// </summary>
+    void CloseNewStud()
+    {
+        //clean up, reset button2 counter and make time run
+        Text text1 = line1.GetComponent<Text>();
+        //Time.timeScale = 0;
+        text1.text = " ";
+        book.transform.localPosition = new Vector3(0, 0, 110);
+        button2.transform.localPosition = new Vector3(0, 0, 110);
+        button3.transform.localPosition = new Vector3(0, 0, 110);
+        button4.transform.localPosition = new Vector3(0, 0, 110);
+        button5.transform.localPosition = new Vector3(0, 0, 110);
+        i = 0;
+        Time.timeScale = 1;
+    }
+
+    void Add_student(GameObject stud)
+    {
+        sample stud_script = stud.GetComponent<sample>();
+        int type = stud_script.type;
+        new_stud_list.Add(stud);
+    }
+
+    //TO DO: NEED A MINUS_LIST
     void Add_list(GameObject facult)
     {
-        Debug.Log("Get_add");
         faculty fac_script = facult.GetComponent<faculty>();
         int type = fac_script.type;
         Debug.Log(type);

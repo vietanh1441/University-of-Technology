@@ -60,6 +60,7 @@ public class sample : MonoBehaviour
     public string name;
     public int age;
 
+    public bool new_char = true; //determine if character is new, thus when load, doesn't go to starting point.
     public bool get_ans = false, answer = false;
     public int code;
     public GameObject faculty;
@@ -67,6 +68,7 @@ public class sample : MonoBehaviour
     public bool ok = false;
     private PolyNavAgent _agent;
     public float elevator_x = -4.8f;
+    float seed;
     public PolyNavAgent agent
     {
         get
@@ -101,20 +103,47 @@ public class sample : MonoBehaviour
     void Start()
     {
         
-        
-        type = 1;
-       // float percentage;
-        //init stats. Each year the maximum initial stats is increase by 5 to ensure that the new student could be good
+        //First set the character in place if character is new
+        if(new_char)
+        {
+            transform.position = new Vector3(-20,0.61f,-1);
+        }
+        //Init stats
         if (type == 1) // student
         {
+            gameObject.tag = "Student";
             Init_stud_stats();
-            
+            //Send info to central or something that handle selection of new student
+            central_obj.SendMessage("Add_student", gameObject);
         }
+
+        
+
+        //
+        
+        
+      
         //Ask(faculty);
     }
 
+    void RealStart()
+    {
+        new_char = false;
+        transform.position = new Vector3(seed, 0.61f, -1);
+    }
+
+    /// <summary>
+    /// For Student:
+    /// From here, starting the circle of action
+    /// if no class, choose class-research-facils then go to random according
+    /// when it's time, decide whether to skip class, if do, continue on, otherwise, drop everything and go to class
+    /// After that, continue on
+    /// </summary>
+
     void Init_stud_stats()
     {
+        seed = Random.Range(-9.0f, -7.0f);
+        name = "Student" + (int)Random.Range(0,100);
         central_obj = GameObject.FindGameObjectsWithTag("Central")[0];
         central c_script = central_obj.GetComponent<central>();
         int years = c_script.years;

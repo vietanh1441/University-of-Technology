@@ -37,13 +37,12 @@ public class timer : MonoBehaviour {
         Text text1 = uitimer.GetComponent<Text>();
         while (true)
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             mins = mins + 10;
             if (mins == 60)
             {
                 hour = hour + 1;
                 mins = 0;
-                SendNewMessage();
             }
             if (hour == 24)
             {
@@ -55,20 +54,36 @@ public class timer : MonoBehaviour {
                 year = year + 1;
                 day = 0;
             }
+            if ((hour == 5 || hour == 15) && (day != 0|| day != 5 || day != 10 || day != 15) && mins == 0)
+            {
+                SendNewMessage();
+            }
+            if(hour==1 && (day ==0 || day == 5 || day == 10) && mins == 0)
+            {
+                SendCentral();
+            }
             text1.text = "Year:     " + year + "    Day     " + day + "     Time:       " + hour + " : " + mins; 
         }
     }
 
     void SendNewMessage()
     {
-        GameObject[] characters;
-        characters = GameObject.FindGameObjectsWithTag("Character");
+        GameObject[] students, professors;
+        students = GameObject.FindGameObjectsWithTag("Student");
+        professors = GameObject.FindGameObjectsWithTag("Prof");
         int i = 0;
-        for(i = 0; i < characters.Length; i++)
+        for(i = 0; i < students.Length; i++)
         {
-            characters[i].SendMessage("ItsTime");
+            students[i].SendMessage("ItsTime");
+            professors[i].SendMessage("ItsTime");
         }
     }
 
+    void SendCentral()
+    {
+        GameObject central;
+        central = GameObject.FindGameObjectWithTag("Central");
+        central.SendMessage("ItsTime");
+    }
 
 }

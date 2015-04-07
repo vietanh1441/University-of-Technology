@@ -60,6 +60,10 @@
      <Compile Include="Assets\Script\sample.cs" />
      <Compile Include="Assets\Script\spawn.cs" />
      <Compile Include="Assets\Script\timer.cs" />
+     <Compile Include="Assets\button2.cs" />
+     <Compile Include="Assets\button3.cs" />
+     <Compile Include="Assets\button4.cs" />
+     <Compile Include="Assets\button5.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
