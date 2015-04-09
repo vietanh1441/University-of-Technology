@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEditor;
 
 /*
  * 
@@ -16,15 +17,19 @@ using UnityEngine.UI;
 
 //TO DO: TEST BY HAVING 2 class and test by giving timer let student choose class.
 public class central : MonoBehaviour {
-    public SortedList<int, GameObject> classes = new SortedList<int, GameObject>();
-    public SortedList<int, GameObject> labs = new SortedList<int, GameObject>();
-    public SortedList<int, GameObject> teachs = new SortedList<int, GameObject>();
-    public SortedList<int, GameObject> facils = new SortedList<int, GameObject>();
+    public SortedList<int, GameObject> classes = new SortedList<int, GameObject>(new Comparer());
+    public SortedList<int, GameObject> labs = new SortedList<int, GameObject>(new Comparer());
+    public SortedList<int, GameObject> teachs = new SortedList<int, GameObject>(new Comparer());
+    public SortedList<int, GameObject> facils = new SortedList<int, GameObject>(new Comparer());
     public GameObject[] class_list, lab_list, facil_list, teach_list;
     public List<GameObject> new_stud_list = new List<GameObject>();
+    public int stud_limit = 0, prof_limit = 0; // maximum number of prof and student
+    public int stud_current = 0, prof_current = 0;
+    public int stud_limit_add = 2, prof_limit_add=2; //number of more student unlock with each class/teach
     public int years;
     public GameObject line1;
-    public GameObject book, button2,button3, button4, button5;
+    public GameObject book, button2,button3, button4, button5, button6;
+    public GameObject clock;
     public int i = 0; //counter
 	// Use this for initialization
 	void Start () {
@@ -33,11 +38,33 @@ public class central : MonoBehaviour {
         button3 = GameObject.FindGameObjectWithTag("button3");
         button4 = GameObject.FindGameObjectWithTag("button4");
         button5 = GameObject.FindGameObjectWithTag("button5");
+        button6 = GameObject.FindGameObjectWithTag("button6");
         book = GameObject.FindGameObjectWithTag("book");
-       
+        clock = GameObject.FindGameObjectWithTag("Timer"); 
 	}
 	
+    void SpawnNewStudent()
+    {
+        timer time_script = clock.GetComponent<timer>();
+        int i = 0;
+        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Student.prefab", typeof(GameObject));
+        GameObject clone ;
+        for (i = 0; i < 5 + time_script.year-1; i++)
+        {
+            clone = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+            clone.transform.position = new Vector3(-20, 0.61f, -1);
+        }
+        button6.transform.localPosition = new Vector3(6.25f, 3, 9);
+    }
+
     void ItsTime()
+    {
+       
+        
+            SpawnNewStudent();
+    }
+
+    void StartChooseNewStudent()
     {
         //Stop time
         Time.timeScale = 0;
@@ -75,7 +102,7 @@ public class central : MonoBehaviour {
             Debug.Log(i + "lol" +  new_stud_list.Count);
             if (i == new_stud_list.Count-1)
             {
-                button2.transform.position = new Vector3(0, 0, 110);
+                button2.transform.localPosition = new Vector3(0, 0, 110);
                 Debug.Log("WHYNOT?");
                 
             }
@@ -99,7 +126,16 @@ public class central : MonoBehaviour {
 
     void Choose()
     {
-        new_stud_list[i].SendMessage("RealStart");
+        if (stud_current < stud_limit)
+        {
+            new_stud_list[i].SendMessage("Stud_RealStart");
+            stud_current = stud_current + 1;
+            new_stud_list.Remove(new_stud_list[i]);
+        }
+        else
+        {
+            //Show message full
+        }
     }
 
     /// <summary>
@@ -138,6 +174,39 @@ public class central : MonoBehaviour {
             class_list = GameObject.FindGameObjectsWithTag("Class");
             Debug.Log(class_list.Length);
             classes.Clear();
+            stud_limit = stud_limit + stud_limit_add;
+            Start_sort(0);
+        }
+        else if (type == 1)
+        {
+            lab_list = GameObject.FindGameObjectsWithTag("Lab");
+            labs.Clear();
+            Start_sort(1);
+        }
+        else if (type == 2)
+        {
+
+            teach_list = GameObject.FindGameObjectsWithTag("Teach");
+            teachs.Clear();
+            prof_limit = prof_limit + prof_limit_add;
+            Start_sort(2);
+        }
+        else 
+        {
+            facil_list = GameObject.FindGameObjectsWithTag("Facil");
+            facils.Clear();
+            Start_sort(3);
+        }
+    }
+
+    IEnumerator Minus_list(int type)
+    {
+        yield return new WaitForSeconds(1); //Ensure that object already delete
+        if (type == 0)
+        {
+            class_list = GameObject.FindGameObjectsWithTag("Class");
+            Debug.Log(class_list.Length);
+            classes.Clear();
             Start_sort(0);
         }
         else if (type == 1)
@@ -152,7 +221,7 @@ public class central : MonoBehaviour {
             teachs.Clear();
             Start_sort(2);
         }
-        else 
+        else
         {
             facil_list = GameObject.FindGameObjectsWithTag("Facil");
             facils.Clear();
@@ -198,5 +267,21 @@ public class central : MonoBehaviour {
             teachs.Add(prior, facult);
         else if (type == 3)
             facils.Add(prior, facult);
+    }
+}
+
+public class Comparer : IComparer<int>
+{
+    public int Compare(int first, int next)
+    {
+        if (first < next)
+            return -1;
+        else if (first == next)
+        {
+            return 1;
+        }
+        else
+            return 1;
+
     }
 }

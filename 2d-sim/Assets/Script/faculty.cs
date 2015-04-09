@@ -91,6 +91,7 @@ public class faculty : MonoBehaviour {
 
     void Asked(GameObject character)
     {
+        Debug.Log("GetAsked");
         if(okay == true)
         {
             okay = false;

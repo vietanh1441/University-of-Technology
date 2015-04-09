@@ -19,12 +19,13 @@ public class timer : MonoBehaviour {
     public int day = 1;
     public int hour = 0;
     public int mins = 0;
+    public GameObject button6;
     public GameObject uitimer;
 	// Use this for initialization
 	void Start () {
         uitimer = GameObject.FindGameObjectWithTag("UiClock");
         StartCoroutine("Time");
-        
+        button6 = GameObject.FindGameObjectWithTag("button6");
 	}
 	
 	// Update is called once per frame
@@ -54,13 +55,17 @@ public class timer : MonoBehaviour {
                 year = year + 1;
                 day = 0;
             }
-            if ((hour == 5 || hour == 15) && (day != 0|| day != 5 || day != 10 || day != 15) && mins == 0)
+            if ((hour == 2 || hour == 15) && (day == 0 && day != 5 && day != 10 && day != 15) && mins == 0)
             {
                 SendNewMessage();
             }
             if(hour==1 && (day ==0 || day == 5 || day == 10) && mins == 0)
             {
                 SendCentral();
+            }
+            if(hour==0 && mins == 0 && (day == 1 || day == 6 || day == 11))
+            {
+                button6.transform.localPosition = new Vector3(0, 0, 110);
             }
             text1.text = "Year:     " + year + "    Day     " + day + "     Time:       " + hour + " : " + mins; 
         }
@@ -74,8 +79,11 @@ public class timer : MonoBehaviour {
         int i = 0;
         for(i = 0; i < students.Length; i++)
         {
-            students[i].SendMessage("ItsTime");
-            professors[i].SendMessage("ItsTime");
+            if(students.Length>0)
+                students[i].SendMessage("ItsTime");
+            if(professors.Length>0)
+                professors[i].SendMessage("ItsTime");
+
         }
     }
 

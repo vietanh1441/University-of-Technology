@@ -64,6 +64,7 @@
      <Compile Include="Assets\button3.cs" />
      <Compile Include="Assets\button4.cs" />
      <Compile Include="Assets\button5.cs" />
+     <Compile Include="Assets\button6.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

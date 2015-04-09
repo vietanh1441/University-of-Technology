@@ -34,6 +34,7 @@ public class spawn : MonoBehaviour {
                 break;
         }
         GameObject clone = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+        clone.transform.parent = transform;
         // Modify the clone to your heart's content
         clone.transform.position = transform.position;
     }

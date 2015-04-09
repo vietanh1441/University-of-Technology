@@ -111,7 +111,7 @@ public class sample : MonoBehaviour
         //Init stats
         if (type == 1) // student
         {
-            gameObject.tag = "Student";
+            //gameObject.tag = "Student_New";
             Init_stud_stats();
             //Send info to central or something that handle selection of new student
             central_obj.SendMessage("Add_student", gameObject);
@@ -126,10 +126,12 @@ public class sample : MonoBehaviour
         //Ask(faculty);
     }
 
-    void RealStart()
+    void Stud_RealStart()
     {
         new_char = false;
         transform.position = new Vector3(seed, 0.61f, -1);
+        gameObject.tag = "Student";
+		Okthen (new Vector3(-1, 1, 4));
     }
 
     /// <summary>
@@ -342,15 +344,20 @@ public class sample : MonoBehaviour
     {
         central cen_script = central_obj.GetComponent<central>();
         SortedList<int, GameObject> list = cen_script.classes;
-        int i;
+        
         Debug.Log(list.Count);
         foreach (var pair in list)
         {
-            Debug.Log(pair.Key);
+			int i =0;
+            Debug.Log("Ask" + pair.Key);
+			faculty = pair.Value;
             Ask(pair.Value);
             while (get_ans == false)
             {
-                
+                i++;
+                Debug.Log("no answer");
+                if (i >= 10)
+                    break;
             }
             if(answer == true)
             {
@@ -373,22 +380,21 @@ public class sample : MonoBehaviour
     void ItsTime()
     {
         Debug.Log("received");
-        Get_list(0);
+        int i = Get_list(0);
+		if (i == -1)
+			Debug.Log ("Nothing");
     }
 
     void Replied(bool answer)
     {
+		get_ans = true;
         if(answer==true)
         {
             Vector3 dest = faculty.transform.position;
-            get_ans = true;
+            
             Okthen(dest);
         }
-        else
-        {
-            get_ans = true;
-            //do something else
-        }
+        
     }
 
 
