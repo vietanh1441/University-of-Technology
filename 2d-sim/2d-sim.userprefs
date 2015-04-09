@@ -1,16 +1,23 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\sample.cs">
     <Files>
-      <File FileName="Assets\Script\sample.cs" Line="413" Column="1" />
-      <File FileName="Assets\Script\faculty.cs" Line="94" Column="1" />
-      <File FileName="Assets\Script\timer.cs" Line="98" Column="1" />
+      <File FileName="Assets\Script\sample.cs" Line="393" Column="23" />
+      <File FileName="Assets\Script\faculty.cs" Line="102" Column="1" />
+      <File FileName="Assets\Script\timer.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\faculty.cs" line="94" />
       <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\faculty.cs" line="98" />
+      <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\sample.cs" line="359" />
+      <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\sample.cs" line="358" />
+      <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\sample.cs" line="383" />
+      <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\sample.cs" line="388" />
+      <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\faculty.cs" line="102" />
+      <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\sample.cs" line="393" />
+      <Breakpoint file="C:\Users\vietanh1441\Documents\GitHub\UofT\2d-sim\Assets\Script\sample.cs" line="368" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

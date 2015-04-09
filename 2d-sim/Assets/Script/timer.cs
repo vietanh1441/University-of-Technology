@@ -21,6 +21,7 @@ public class timer : MonoBehaviour {
     public int mins = 0;
     public GameObject button6;
     public GameObject uitimer;
+    int i; //global counter;
 	// Use this for initialization
 	void Start () {
         uitimer = GameObject.FindGameObjectWithTag("UiClock");
@@ -73,18 +74,31 @@ public class timer : MonoBehaviour {
 
     void SendNewMessage()
     {
-        GameObject[] students, professors;
-        students = GameObject.FindGameObjectsWithTag("Student");
-        professors = GameObject.FindGameObjectsWithTag("Prof");
+        //GameObject[] students, professors;
+        //students = GameObject.FindGameObjectsWithTag("Student");
+        //professors = GameObject.FindGameObjectsWithTag("Prof");
         int i = 0;
-        for(i = 0; i < students.Length; i++)
-        {
-            if(students.Length>0)
-                students[i].SendMessage("ItsTime");
-            if(professors.Length>0)
-                professors[i].SendMessage("ItsTime");
+        StudMessage(i);
+                
+          //  if(professors.Length>0)
+            //    professors[i].SendMessage("ItsTime");
 
-        }
+        
+    }
+
+    void StudMessage(int i)
+    {
+        Debug.Log(i);
+        GameObject[] students;
+        students = GameObject.FindGameObjectsWithTag("Student");
+        students[i].SendMessage("ItsTime");
+    }
+
+    void Stud_next()
+    {
+        Debug.Log("NEXTTTT");
+        StudMessage(i + 1);
+        
     }
 
     void SendCentral()

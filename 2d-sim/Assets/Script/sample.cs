@@ -64,11 +64,12 @@ public class sample : MonoBehaviour
     public bool get_ans = false, answer = false;
     public int code;
     public GameObject faculty;
-    public GameObject central_obj;
+    public GameObject central_obj, timer_obj;
     public bool ok = false;
     private PolyNavAgent _agent;
     public float elevator_x = -4.8f;
     float seed;
+    int i;//global counter
     public PolyNavAgent agent
     {
         get
@@ -102,7 +103,7 @@ public class sample : MonoBehaviour
     /// </summary>
     void Start()
     {
-        
+        timer_obj = GameObject.FindGameObjectWithTag("Timer");
         //First set the character in place if character is new
         if(new_char)
         {
@@ -340,33 +341,23 @@ public class sample : MonoBehaviour
     /// then it start asking to join from ascending order.
     /// </summary>
     /// <param name="type"></param>
-    int Get_list(int type)
+    void Get_list(int type)
     {
         central cen_script = central_obj.GetComponent<central>();
         SortedList<int, GameObject> list = cen_script.classes;
-        
+        i = 0;
         Debug.Log(list.Count);
-        foreach (var pair in list)
-        {
-			int i =0;
-            Debug.Log("Ask" + pair.Key);
-			faculty = pair.Value;
-            Ask(pair.Value);
-            while (get_ans == false)
-            {
-                i++;
-                Debug.Log("no answer");
-                if (i >= 10)
-                    break;
-            }
-            if(answer == true)
-            {
-                return 1;
-            }
-        }
-        return -1;  //Nothing on list is goable
+        faculty = list.Values[i];
+        Ask(faculty);
     }
 
+    void Ask_Next(int i)
+    {
+        central cen_script = central_obj.GetComponent<central>();
+        SortedList<int, GameObject> list = cen_script.classes;
+        faculty = list.Values[i];
+        Ask(faculty);
+    }
     /// <summary>
     /// Send message to the avalable faculty and ask if available
     /// if do, 
@@ -380,19 +371,26 @@ public class sample : MonoBehaviour
     void ItsTime()
     {
         Debug.Log("received");
-        int i = Get_list(0);
-		if (i == -1)
-			Debug.Log ("Nothing");
+         Get_list(0);
+        
+        
+            
     }
 
     void Replied(bool answer)
     {
 		get_ans = true;
+        Debug.Log(answer);
         if(answer==true)
         {
             Vector3 dest = faculty.transform.position;
-            
+            timer_obj.SendMessage("Stud_next");
             Okthen(dest);
+        }
+        else
+        {
+			i = i+1;
+            Ask_Next(i);
         }
         
     }
