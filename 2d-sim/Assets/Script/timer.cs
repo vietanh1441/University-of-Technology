@@ -4,14 +4,21 @@ using UnityEngine.UI;
 
 
 /*
- *This is the script for clock timer
- *It first find all the available character
- *Then whenever the clock hit 5/10/15/20, it sends signal to everyone so they will drop everything and go to class
- *Every 3 seconds is 10 minutes
- *A term have 4 days, and 1 freeday
- *a year have 3 term plus 3 preparation day.
- *so total: 5* 3 + 3 = 18 days
- * 
+ 8 hour day
+day 0: choose student + professor + assign class need to be done before 8
+day 1: (whole day) student choose class
+day 2: class start at 4
+day 3: class
+day 4: class
+day 5: mid term + assign class
+day 6: student choose class
+day 7: class
+day 8: class
+day 9: class
+day 10: final + choose student + assign class
+day 11-20: same with 1-10
+day 21-30: same
+day 31: End of year stuffs
  */
 
 public class timer : MonoBehaviour {
@@ -39,8 +46,8 @@ public class timer : MonoBehaviour {
         Text text1 = uitimer.GetComponent<Text>();
         while (true)
         {
-            yield return new WaitForSeconds(1);
-            mins = mins + 10;
+            yield return new WaitForSeconds(2);
+            mins = mins + 30;
             if (mins == 60)
             {
                 hour = hour + 1;
@@ -51,12 +58,14 @@ public class timer : MonoBehaviour {
                 day = day + 1;
                 hour = 0;
             }
-            if ( day == 19)
+            if ( day == 32)
             {
                 year = year + 1;
                 day = 0;
             }
-            if ((hour == 2 || hour == 15) && (day == 0 && day != 5 && day != 10 && day != 15) && mins == 0)
+            //if((hour == 15)&&(day ==0))
+
+            if ((hour == 3 || hour == 15) && (day == 0 && day != 5 && day != 10 && day != 15) && mins == 0)
             {
                 SendNewMessage();
             }
@@ -80,9 +89,9 @@ public class timer : MonoBehaviour {
         int i = 0;
         GameObject[] students;
         students = GameObject.FindGameObjectsWithTag("Student");
-        students[i].SendMessage("ItsTime");
+        //students[i].SendMessage("ItsTime");
         for (i = 0; i < students.Length;i++ )
-            students[i].SendMessage("ItsTime");
+            students[i].SendMessage("ItsClassTime");
             //StudMessage(i);
                 
           //  if(professors.Length>0)

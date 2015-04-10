@@ -3,11 +3,49 @@ Known Bug:
 Rght and Left click on choose student UI still not working properly
 Fixed the bug of close button.
 When there is no student and it's time to go to class, need checking if student number is 0;
+Choose student doesn't work correctly
 
 TODOLIST
 
+Student interaction with class
 Give faculty slot
 Think of a system for student to register for classes
 Build new floor
 Polished the UI system
 Permanent-temporary class system
+Implement lab and facil
+
+
+Desgin
+8 hour day
+day 0: choose student + professor + assign class need to be done before 8
+day 1: (whole day) student choose class
+day 2: class start at 4
+day 3: class
+day 4: class
+day 5: mid term + assign class
+day 6: student choose class
+day 7: class
+day 8: class
+day 9: class
+day 10: final + choose student + assign class
+day 11-20: same with 1-10
+day 21-30: same
+day 31: End of year stuffs
+
+how to register class
+
+First, class need to be assigned 
+
+Research:
+
+2 ways to research:
+Lab + Admin
+
+Lab: open new classes/money/prestigious
+Admin: Throw money in to research school / city
+
+Every class have 3 setting:
+Hard - student gain the most, but hard to pass the class
+Normal- normal
+easy	- gain less, but very easy to pass, use to boost mental hp		

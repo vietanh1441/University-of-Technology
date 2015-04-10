@@ -212,7 +212,8 @@ public class sample : MonoBehaviour
     // 7 : athlete          --  body reduction rate halves, body stats > 80
     // 8 : strong-will      --  mental hp reduction rate halves, mental stats > 80
     // 9 : weak-will        --  mental hp reduction rate x 1.5, mental stats < 60
-    // 10: 
+    // 10: independent      --  doesn't get modifier from teacher or anything else, but gained + 70% modifier
+    // 11: dependent        --  if teacher is good/inspired, gain extra modifier, but if bad, loose modifier
 
     int Get_type()
     {
@@ -338,6 +339,49 @@ public class sample : MonoBehaviour
         ok = false;
     }
     
+    
+
+    IEnumerator WaitAbit()
+    {
+        yield return new WaitForSeconds(1);
+        StartCoroutine("Iddle");
+    }
+    IEnumerator Iddle()
+    {
+        float second;
+        second = Random.Range(0f, 0.5f);
+        yield return new WaitForSeconds(second);
+        Debug.Log("IDDLE");
+        Vector3 dest = new Vector3(transform.position.x + Random.Range(-1f, 1f), transform.position.y, transform.position.z);
+        Okthen(dest);
+        float rand = Random.Range(0f, 100f);
+        if (class_time && Skip_class() == true)
+        {
+            Debug.Log("Skip");
+            class_time = false;
+        }
+        else if (class_time && rand < 60)
+        {
+            Get_list(0);        //Need to be replaced with Go to Class
+        }
+        else
+        {
+            Debug.Log("Com'on");
+            Stud_DoThings();
+            
+        }
+    }
+
+    void Stud_DoThings()
+    {
+        Debug.Log("DoThings");
+        float rand = Random.Range(0f, 100f);
+        if (rand < 70)
+            StartCoroutine("Iddle");
+        else
+            Get_list(0);
+    }
+
     /// <summary>
     /// This function get the sorted list of available room/facil according to its type
     /// then it start asking to join from ascending order.
@@ -347,6 +391,7 @@ public class sample : MonoBehaviour
     {
         central cen_script = central_obj.GetComponent<central>();
         SortedList<int, GameObject> list = cen_script.classes;
+        Debug.Log("GET_LIST");
         i = 0;
         Debug.Log(list.Count);
         faculty = list.Values[i];
@@ -361,28 +406,6 @@ public class sample : MonoBehaviour
         Ask(faculty);
     }
 
-    IEnumerator WaitAbit()
-    {
-        yield return new WaitForSeconds(1);
-        StartCoroutine("Iddle");
-    }
-    IEnumerator Iddle()
-    {
-        float second;
-        second = Random.Range(0f, 2f);
-        yield return new WaitForSeconds(second);
-        Vector3 dest = new Vector3(transform.position.x + Random.Range(-1f, 1f), transform.position.y, transform.position.z);
-        Okthen(dest);
-        if (class_time)
-            Get_list(0);
-        else
-            Stud_DoThings();
-    }
-
-    void Stud_DoThings()
-    {
-        StartCoroutine("Iddle");
-    }
     /// <summary>
     /// Send message to the avalable faculty and ask if available
     /// if do, 
@@ -393,13 +416,10 @@ public class sample : MonoBehaviour
         faculty.SendMessage("Asked", gameObject);
     }
 
-    void ItsTime()
+    void ItsClassTime()
     {
         Debug.Log("received");
-        class_time = true;
-        
-        
-            
+        class_time = true;   
     }
 
     void Replied(bool answer)
@@ -408,20 +428,40 @@ public class sample : MonoBehaviour
         Debug.Log(answer);
         if(answer==true)
         {
-            Vector3 dest = faculty.transform.position;
-            timer_obj.SendMessage("Stud_next");
-            Okthen(dest);
+            
+         //   timer_obj.SendMessage("Stud_next");
+            StartCoroutine("GoToPlace");
         }
         else
         {
+            Debug.Log("ARE YOU HERE?");
 			i = i+1;
             Ask_Next(i);
         }
         
     }
 
+    IEnumerator GoToPlace()
+    {
+        Debug.Log(faculty);
+        Vector3 dest = faculty.transform.position;
+        Okthen(dest);
+        yield return new WaitForSeconds(1f);
+        Interacting();
 
+    }
 
+    void Interacting()
+    {
+        //Do stuff here
+        Finish_Interacting();
+    }
+
+    void Finish_Interacting()
+    {
+        StartCoroutine("WaitAbit");
+        faculty.SendMessage("Stud_Finish");
+    }
     IEnumerator lol()
     {
         yield return new WaitForSeconds(3);

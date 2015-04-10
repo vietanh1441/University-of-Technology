@@ -109,4 +109,9 @@ public class faculty : MonoBehaviour {
             character.SendMessage("Replied", false);
         }
     }
+
+    void Stud_Finish()
+    {
+        fill--;
+    }
 }
