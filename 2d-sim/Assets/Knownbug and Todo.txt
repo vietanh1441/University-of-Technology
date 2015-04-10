@@ -1,0 +1,13 @@
+Known Bug:
+
+Rght and Left click on choose student UI still not working properly
+Fixed the bug of close button.
+When there is no student and it's time to go to class, need checking if student number is 0;
+
+TODOLIST
+
+Give faculty slot
+Think of a system for student to register for classes
+Build new floor
+Polished the UI system
+Permanent-temporary class system

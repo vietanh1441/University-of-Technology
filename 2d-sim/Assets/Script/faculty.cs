@@ -38,6 +38,13 @@ public class faculty : MonoBehaviour {
     public bool okay = true;
     public GameObject line1;
     public GameObject book, button1;
+
+    //A class can have 2-4 slots for students
+    //When student ask for class, as long as fill is less than slot, the answer would be yes, increase fill by one
+    //Otherwise, return no.
+    //When student leave class, decrease fill by 1
+    public int slot =2;
+    public int fill = 0;
 	// Use this for initialization
 	void Start () {
         line1 = GameObject.FindGameObjectWithTag("line1");
@@ -92,9 +99,9 @@ public class faculty : MonoBehaviour {
     void Asked(GameObject character)
     {
         Debug.Log("GetAsked");
-        if(okay == true)
+        if(fill < slot)
         {
-            okay = false;
+            fill++;
             character.SendMessage("Replied", true);
         }
         else

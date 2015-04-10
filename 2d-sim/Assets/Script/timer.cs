@@ -78,7 +78,12 @@ public class timer : MonoBehaviour {
         //students = GameObject.FindGameObjectsWithTag("Student");
         //professors = GameObject.FindGameObjectsWithTag("Prof");
         int i = 0;
-        StudMessage(i);
+        GameObject[] students;
+        students = GameObject.FindGameObjectsWithTag("Student");
+        students[i].SendMessage("ItsTime");
+        for (i = 0; i < students.Length;i++ )
+            students[i].SendMessage("ItsTime");
+            //StudMessage(i);
                 
           //  if(professors.Length>0)
             //    professors[i].SendMessage("ItsTime");

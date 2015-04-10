@@ -69,6 +69,7 @@ public class sample : MonoBehaviour
     private PolyNavAgent _agent;
     public float elevator_x = -4.8f;
     float seed;
+    private bool class_time = false;
     int i;//global counter
     public PolyNavAgent agent
     {
@@ -133,6 +134,7 @@ public class sample : MonoBehaviour
         transform.position = new Vector3(seed, 0.61f, -1);
         gameObject.tag = "Student";
 		Okthen (new Vector3(-1, 1, 4));
+        StartCoroutine("WaitAbit");
     }
 
     /// <summary>
@@ -358,6 +360,29 @@ public class sample : MonoBehaviour
         faculty = list.Values[i];
         Ask(faculty);
     }
+
+    IEnumerator WaitAbit()
+    {
+        yield return new WaitForSeconds(1);
+        StartCoroutine("Iddle");
+    }
+    IEnumerator Iddle()
+    {
+        float second;
+        second = Random.Range(0f, 2f);
+        yield return new WaitForSeconds(second);
+        Vector3 dest = new Vector3(transform.position.x + Random.Range(-1f, 1f), transform.position.y, transform.position.z);
+        Okthen(dest);
+        if (class_time)
+            Get_list(0);
+        else
+            Stud_DoThings();
+    }
+
+    void Stud_DoThings()
+    {
+        StartCoroutine("Iddle");
+    }
     /// <summary>
     /// Send message to the avalable faculty and ask if available
     /// if do, 
@@ -371,7 +396,7 @@ public class sample : MonoBehaviour
     void ItsTime()
     {
         Debug.Log("received");
-         Get_list(0);
+        class_time = true;
         
         
             
